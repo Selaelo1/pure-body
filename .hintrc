@@ -19,6 +19,7 @@
         "link-name": "off"
       }
     ],
-    "typescript-config/is-valid": "off"
+    "typescript-config/is-valid": "off",
+    "axe/forms": "off"
   }
 }
