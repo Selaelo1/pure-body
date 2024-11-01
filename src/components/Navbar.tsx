@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Dumbbell } from "lucide-react";
+import { useAuthStore } from "../store/authStore";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="bg-white shadow-lg fixed w-full z-50">
@@ -38,9 +46,37 @@ const Navbar = () => {
             >
               Challenges
             </Link>
-            <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-              Sign In
-            </button>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-gray-600 hover:text-purple-600"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-gray-600 hover:text-purple-600"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -81,9 +117,37 @@ const Navbar = () => {
             >
               Challenges
             </Link>
-            <button className="w-full text-left px-3 py-2 text-purple-600 font-medium">
-              Sign In
-            </button>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-3 py-2 text-purple-600 font-medium"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="block px-3 py-2 text-purple-600 font-medium"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}
