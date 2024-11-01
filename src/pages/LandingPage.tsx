@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Activity,
@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
@@ -37,7 +39,10 @@ const LandingPage = () => {
               Connect with expert trainers, track your progress, and join a
               community of fitness enthusiasts on your journey to better health.
             </p>
-            <button className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors flex items-center">
+            <button
+              onClick={() => navigate("/register")}
+              className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors flex items-center"
+            >
               Get Started <ArrowRight className="ml-2" />
             </button>
           </motion.div>
@@ -74,7 +79,10 @@ const LandingPage = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Ready to Start Your Fitness Journey?
           </h2>
-          <button className="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
+          <button
+            onClick={() => navigate("/register")}
+            className="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
+          >
             Join Pure Body Today
           </button>
         </div>
