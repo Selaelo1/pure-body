@@ -1,6 +1,6 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { useAuthStore } from "../../stores/authStore";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 import {
   Activity,
   Brain,
@@ -18,9 +18,16 @@ import Challenges from "./Challenges";
 import Nutrition from "./Nutrition";
 import MentalWellness from "./MentalWellness";
 import DeviceSync from "./DeviceSync";
+import Setting from "./Settings";
 
 const Dashboard = () => {
   const { user } = useAuthStore();
+  const location = useLocation();
+
+  const isActiveRoute = (path: string) => {
+    const currentPath = location.pathname.replace("/dashboard", "");
+    return currentPath === path || (currentPath === "" && path === "");
+  };
 
   return (
     <div className="flex min-h-screen pt-16">
@@ -39,13 +46,48 @@ const Dashboard = () => {
             </div>
           </div>
           <nav className="space-y-2">
-            <NavItem to="" icon={Activity} text="Overview" />
-            <NavItem to="workouts" icon={Users} text="Workouts" />
-            <NavItem to="challenges" icon={Trophy} text="Challenges" />
-            <NavItem to="nutrition" icon={Utensils} text="Nutrition" />
-            <NavItem to="mental-wellness" icon={Brain} text="Mental Wellness" />
-            <NavItem to="device-sync" icon={Watch} text="Device Sync" />
-            <NavItem to="settings" icon={Settings} text="Settings" />
+            <NavItem
+              to=""
+              icon={Activity}
+              text="Overview"
+              isActive={isActiveRoute("")}
+            />
+            <NavItem
+              to="workouts"
+              icon={Users}
+              text="Workouts"
+              isActive={isActiveRoute("/workouts")}
+            />
+            <NavItem
+              to="challenges"
+              icon={Trophy}
+              text="Challenges"
+              isActive={isActiveRoute("/challenges")}
+            />
+            <NavItem
+              to="nutrition"
+              icon={Utensils}
+              text="Nutrition"
+              isActive={isActiveRoute("/nutrition")}
+            />
+            <NavItem
+              to="mental-wellness"
+              icon={Brain}
+              text="Mental Wellness"
+              isActive={isActiveRoute("/mental-wellness")}
+            />
+            <NavItem
+              to="device-sync"
+              icon={Watch}
+              text="Device Sync"
+              isActive={isActiveRoute("/device-sync")}
+            />
+            <NavItem
+              to="settings"
+              icon={Settings}
+              text="Setting"
+              isActive={isActiveRoute("/settings")}
+            />
           </nav>
         </div>
       </aside>
@@ -59,6 +101,7 @@ const Dashboard = () => {
           <Route path="nutrition" element={<Nutrition />} />
           <Route path="mental-wellness" element={<MentalWellness />} />
           <Route path="device-sync" element={<DeviceSync />} />
+          <Route path="settings" element={<Setting />} />
         </Routes>
       </main>
     </div>
@@ -67,15 +110,24 @@ const Dashboard = () => {
 
 interface NavItemProps {
   to: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   text: string;
+  isActive: boolean;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ to, icon: Icon, text }) => (
+const NavItem: React.FC<NavItemProps> = ({
+  to,
+  icon: Icon,
+  text,
+  isActive,
+}) => (
   <Link
     to={to}
-    className="flex items-center space-x-3 px-4 py-2 text-gray-600 rounded-lg hover:bg-purple-50 hover:text-purple-600"
+    className={`flex items-center space-x-3 px-4 py-2 rounded-lg transition-colors ${
+      isActive
+        ? "bg-purple-50 text-purple-600"
+        : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
+    }`}
   >
     <Icon className="h-5 w-5" />
     <span>{text}</span>
