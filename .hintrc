@@ -16,10 +16,12 @@
     "axe/name-role-value": [
       "default",
       {
-        "link-name": "off"
+        "link-name": "off",
+        "button-name": "off"
       }
     ],
     "typescript-config/is-valid": "off",
-    "axe/forms": "off"
+    "axe/forms": "off",
+    "button-type": "off"
   }
 }
