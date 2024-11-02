@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import {
@@ -9,6 +8,7 @@ import {
   Trophy,
   Utensils,
   Settings,
+  Calendar,
 } from "lucide-react";
 
 // Import dashboard components
@@ -19,6 +19,7 @@ import Nutrition from "./Nutrition";
 import MentalWellness from "./MentalWellness";
 import DeviceSync from "./DeviceSync";
 import Setting from "./Settings";
+import Sessions from "./Sessions";
 
 const Dashboard = () => {
   const { user } = useAuthStore();
@@ -59,6 +60,12 @@ const Dashboard = () => {
               isActive={isActiveRoute("/workouts")}
             />
             <NavItem
+              to="sessions"
+              icon={Calendar}
+              text="My Sessions"
+              isActive={isActiveRoute("/sessions")}
+            />
+            <NavItem
               to="challenges"
               icon={Trophy}
               text="Challenges"
@@ -85,7 +92,7 @@ const Dashboard = () => {
             <NavItem
               to="settings"
               icon={Settings}
-              text="Setting"
+              text="Settings"
               isActive={isActiveRoute("/settings")}
             />
           </nav>
@@ -97,6 +104,7 @@ const Dashboard = () => {
         <Routes>
           <Route path="/" element={<Overview />} />
           <Route path="workouts" element={<Workouts />} />
+          <Route path="sessions" element={<Sessions />} />
           <Route path="challenges" element={<Challenges />} />
           <Route path="nutrition" element={<Nutrition />} />
           <Route path="mental-wellness" element={<MentalWellness />} />
@@ -110,6 +118,7 @@ const Dashboard = () => {
 
 interface NavItemProps {
   to: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   text: string;
   isActive: boolean;
