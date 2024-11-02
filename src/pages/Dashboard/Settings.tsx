@@ -1,5 +1,6 @@
-import { User, Bell, Shield, Smartphone } from "lucide-react";
+import React from "react";
 import { useAuthStore } from "../../store/authStore";
+import { User, Bell, Shield, Smartphone } from "lucide-react";
 
 const Settings = () => {
   const { user } = useAuthStore();
