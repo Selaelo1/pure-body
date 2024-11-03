@@ -9,6 +9,12 @@ import {
   Smartphone,
   Heart,
   Target,
+  MessageCircle,
+  Calendar,
+  BarChart3,
+  Video,
+  BookOpen,
+  ShieldCheck,
 } from "lucide-react";
 
 const Features = () => {
@@ -41,6 +47,20 @@ const Features = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Start Your Fitness Journey Today
+          </h2>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors"
+            onClick={() => (window.location.href = "/register")}
+          >
+            Join Pure Body Now
+          </motion.button>
         </div>
       </div>
     </div>
@@ -101,6 +121,42 @@ const features = [
     title: "Goal Setting",
     description:
       "Set personalized fitness goals and track your progress with detailed analytics and insights.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Community Support",
+    description:
+      "Connect with like-minded individuals, share experiences, and get motivation from our supportive community.",
+  },
+  {
+    icon: Calendar,
+    title: "Smart Scheduling",
+    description:
+      "Easily book sessions with trainers and manage your workout schedule with our intuitive calendar.",
+  },
+  {
+    icon: BarChart3,
+    title: "Progress Tracking",
+    description:
+      "Visualize your fitness journey with detailed progress charts and performance metrics.",
+  },
+  {
+    icon: Video,
+    title: "Virtual Sessions",
+    description:
+      "Access live and on-demand virtual training sessions from anywhere in the world.",
+  },
+  {
+    icon: BookOpen,
+    title: "Educational Resources",
+    description:
+      "Access a library of fitness education content, technique guides, and wellness articles.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Secure Platform",
+    description:
+      "Your data is protected with enterprise-grade security and privacy measures.",
   },
 ];
 
