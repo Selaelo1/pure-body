@@ -1,4 +1,3 @@
-import React from "react";
 import { Calendar, Clock, X } from "lucide-react";
 import { useBookingStore } from "../../store/bookingStore";
 import { format } from "date-fns";
