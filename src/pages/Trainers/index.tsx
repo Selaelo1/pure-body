@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TrainerCard from "./TrainerCard";
 import TrainerModal from "./TrainerModal";
 import { trainers } from "./trainersData";
