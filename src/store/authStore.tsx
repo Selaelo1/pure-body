@@ -6,7 +6,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  login: async (email: string, password: string) => {
+  login: async (email: string) => {
     try {
       // Mock API call
       const mockUser: User = {
