@@ -9,10 +9,13 @@ import {
   Utensils,
   Settings,
   Calendar,
+  DollarSign,
+  MessageCircle,
 } from "lucide-react";
 
 // Import dashboard components
 import Overview from "./Overview";
+import TrainerDashboard from "./TrainerDashboard";
 import Workouts from "./Workouts";
 import Challenges from "./Challenges";
 import Nutrition from "./Nutrition";
@@ -20,6 +23,10 @@ import MentalWellness from "./MentalWellness";
 import DeviceSync from "./DeviceSync";
 import Setting from "./Settings";
 import Sessions from "./Sessions";
+import MyClients from "./trainer/MyClients";
+import Schedule from "./trainer/Schedule";
+import Earnings from "./trainer/Earnings";
+import Messages from "./trainer/Messages";
 
 const Dashboard = () => {
   const { user } = useAuthStore();
@@ -29,6 +36,8 @@ const Dashboard = () => {
     const currentPath = location.pathname.replace("/dashboard", "");
     return currentPath === path || (currentPath === "" && path === "");
   };
+
+  const isTrainer = user?.role === "trainer";
 
   return (
     <div className="flex min-h-screen pt-16">
@@ -50,45 +59,76 @@ const Dashboard = () => {
             <NavItem
               to=""
               icon={Activity}
-              text="Overview"
+              text={isTrainer ? "Trainer Dashboard" : "Overview"}
               isActive={isActiveRoute("")}
             />
-            <NavItem
-              to="workouts"
-              icon={Users}
-              text="Workouts"
-              isActive={isActiveRoute("/workouts")}
-            />
-            <NavItem
-              to="sessions"
-              icon={Calendar}
-              text="My Sessions"
-              isActive={isActiveRoute("/sessions")}
-            />
-            <NavItem
-              to="challenges"
-              icon={Trophy}
-              text="Challenges"
-              isActive={isActiveRoute("/challenges")}
-            />
-            <NavItem
-              to="nutrition"
-              icon={Utensils}
-              text="Nutrition"
-              isActive={isActiveRoute("/nutrition")}
-            />
-            <NavItem
-              to="mental-wellness"
-              icon={Brain}
-              text="Mental Wellness"
-              isActive={isActiveRoute("/mental-wellness")}
-            />
-            <NavItem
-              to="device-sync"
-              icon={Watch}
-              text="Device Sync"
-              isActive={isActiveRoute("/device-sync")}
-            />
+            {isTrainer ? (
+              <>
+                <NavItem
+                  to="clients"
+                  icon={Users}
+                  text="My Clients"
+                  isActive={isActiveRoute("/clients")}
+                />
+                <NavItem
+                  to="schedule"
+                  icon={Calendar}
+                  text="Schedule"
+                  isActive={isActiveRoute("/schedule")}
+                />
+                <NavItem
+                  to="earnings"
+                  icon={DollarSign}
+                  text="Earnings"
+                  isActive={isActiveRoute("/earnings")}
+                />
+                <NavItem
+                  to="messages"
+                  icon={MessageCircle}
+                  text="Messages"
+                  isActive={isActiveRoute("/messages")}
+                />
+              </>
+            ) : (
+              <>
+                <NavItem
+                  to="workouts"
+                  icon={Users}
+                  text="Workouts"
+                  isActive={isActiveRoute("/workouts")}
+                />
+                <NavItem
+                  to="sessions"
+                  icon={Calendar}
+                  text="My Sessions"
+                  isActive={isActiveRoute("/sessions")}
+                />
+                <NavItem
+                  to="challenges"
+                  icon={Trophy}
+                  text="Challenges"
+                  isActive={isActiveRoute("/challenges")}
+                />
+                <NavItem
+                  to="nutrition"
+                  icon={Utensils}
+                  text="Nutrition"
+                  isActive={isActiveRoute("/nutrition")}
+                />
+                <NavItem
+                  to="mental-wellness"
+                  icon={Brain}
+                  text="Mental Wellness"
+                  isActive={isActiveRoute("/mental-wellness")}
+                />
+                <NavItem
+                  to="device-sync"
+                  icon={Watch}
+                  text="Device Sync"
+                  isActive={isActiveRoute("/device-sync")}
+                />
+              </>
+            )}
             <NavItem
               to="settings"
               icon={Settings}
@@ -102,7 +142,10 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="flex-1 ml-64 p-8">
         <Routes>
-          <Route path="/" element={<Overview />} />
+          <Route
+            path="/"
+            element={isTrainer ? <TrainerDashboard /> : <Overview />}
+          />
           <Route path="workouts" element={<Workouts />} />
           <Route path="sessions" element={<Sessions />} />
           <Route path="challenges" element={<Challenges />} />
@@ -110,6 +153,11 @@ const Dashboard = () => {
           <Route path="mental-wellness" element={<MentalWellness />} />
           <Route path="device-sync" element={<DeviceSync />} />
           <Route path="settings" element={<Setting />} />
+          {/* Trainer Routes */}
+          <Route path="clients" element={<MyClients />} />
+          <Route path="schedule" element={<Schedule />} />
+          <Route path="earnings" element={<Earnings />} />
+          <Route path="messages" element={<Messages />} />
         </Routes>
       </main>
     </div>
