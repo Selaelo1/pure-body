@@ -5,8 +5,9 @@ import { useAuthStore } from "../store/authStore";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout, user } = useAuthStore();
   const navigate = useNavigate();
+  const isTrainer = user?.role === "trainer";
 
   const handleLogout = () => {
     logout();
@@ -34,12 +35,14 @@ const Navbar = () => {
             >
               Features
             </Link>
-            <Link
-              to="/trainers"
-              className="text-gray-600 hover:text-purple-600"
-            >
-              Find Trainers
-            </Link>
+            {!isTrainer && (
+              <Link
+                to="/trainers"
+                className="text-gray-600 hover:text-purple-600"
+              >
+                Find Trainers
+              </Link>
+            )}
             <Link
               to="/challenges"
               className="text-gray-600 hover:text-purple-600"
@@ -105,12 +108,14 @@ const Navbar = () => {
             >
               Features
             </Link>
-            <Link
-              to="/trainers"
-              className="block px-3 py-2 text-gray-600 hover:text-purple-600"
-            >
-              Find Trainers
-            </Link>
+            {!isTrainer && (
+              <Link
+                to="/trainers"
+                className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+              >
+                Find Trainers
+              </Link>
+            )}
             <Link
               to="/challenges"
               className="block px-3 py-2 text-gray-600 hover:text-purple-600"
