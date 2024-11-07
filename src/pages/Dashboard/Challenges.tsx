@@ -1,4 +1,3 @@
-import React from "react";
 import { Trophy, Timer, Target } from "lucide-react";
 
 const Challenges = () => {
