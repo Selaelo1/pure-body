@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Search, Send } from "lucide-react";
 
@@ -115,14 +114,16 @@ const contacts = [
   {
     id: 1,
     name: "Emma Watson",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     lastMessage: "See you tomorrow at 10 AM!",
     lastMessageTime: "2m ago",
   },
   {
     id: 2,
     name: "John Smith",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     lastMessage: "Thanks for the session today",
     lastMessageTime: "1h ago",
   },
