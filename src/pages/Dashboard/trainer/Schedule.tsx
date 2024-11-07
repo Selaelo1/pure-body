@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Clock, MapPin } from "lucide-react";
 
@@ -66,14 +65,16 @@ const scheduleData = [
     sessions: [
       {
         clientName: "Emma Watson",
-        clientImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        clientImage:
+          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         type: "Strength Training",
         time: "10:00 AM",
         location: "Main Gym",
       },
       {
         clientName: "John Smith",
-        clientImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        clientImage:
+          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         type: "HIIT",
         time: "2:30 PM",
         location: "Training Room 2",
@@ -85,7 +86,8 @@ const scheduleData = [
     sessions: [
       {
         clientName: "Sarah Johnson",
-        clientImage: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+        clientImage:
+          "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         type: "Yoga",
         time: "9:00 AM",
         location: "Yoga Studio",
