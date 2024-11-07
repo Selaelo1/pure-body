@@ -1,4 +1,5 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
 import {
   Activity,
@@ -11,9 +12,15 @@ import {
   Calendar,
   DollarSign,
   MessageCircle,
+  Menu,
+  X,
+  LogOut,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-// Import dashboard components
+// Import components
+import Sidebar, { NavItem } from "../../components/dashboard/Sidebar";
 import Overview from "./Overview";
 import TrainerDashboard from "./TrainerDashboard";
 import Workouts from "./Workouts";
@@ -29,8 +36,10 @@ import Earnings from "./trainer/Earnings";
 import Messages from "./trainer/Messages";
 
 const Dashboard = () => {
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const isActiveRoute = (path: string) => {
     const currentPath = location.pathname.replace("/dashboard", "");
@@ -39,156 +48,127 @@ const Dashboard = () => {
 
   const isTrainer = user?.role === "trainer";
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  // Close sidebar when route changes
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [location]);
+
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebar = document.getElementById("sidebar");
+      const menuButton = document.getElementById("menu-button");
+      if (
+        isSidebarOpen &&
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        menuButton &&
+        !menuButton.contains(event.target as Node)
+      ) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isSidebarOpen]);
+
+  const trainerNavItems: NavItem[] = [
+    { to: "", icon: Activity, text: "Trainer Dashboard" },
+    { to: "clients", icon: Users, text: "My Clients" },
+    { to: "schedule", icon: Calendar, text: "Schedule" },
+    { to: "earnings", icon: DollarSign, text: "Earnings" },
+    { to: "messages", icon: MessageCircle, text: "Messages" },
+    { to: "settings", icon: Settings, text: "Settings" },
+  ];
+
+  const clientNavItems: NavItem[] = [
+    { to: "", icon: Activity, text: "Overview" },
+    { to: "workouts", icon: Users, text: "Workouts" },
+    { to: "sessions", icon: Calendar, text: "My Sessions" },
+    { to: "challenges", icon: Trophy, text: "Challenges" },
+    { to: "nutrition", icon: Utensils, text: "Nutrition" },
+    { to: "mental-wellness", icon: Brain, text: "Mental Wellness" },
+    { to: "device-sync", icon: Watch, text: "Device Sync" },
+    { to: "settings", icon: Settings, text: "Settings" },
+  ];
+
+  const navItems = [...(isTrainer ? trainerNavItems : clientNavItems)];
+
   return (
-    <div className="flex min-h-screen pt-16">
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Menu Button */}
+      <button
+        id="menu-button"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg lg:hidden"
+      >
+        {isSidebarOpen ? (
+          <X className="h-6 w-6 text-gray-600" />
+        ) : (
+          <Menu className="h-6 w-6 text-gray-600" />
+        )}
+      </button>
+
+      {/* Sidebar Overlay */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg fixed h-full">
-        <div className="p-4">
-          <div className="flex items-center space-x-3 mb-6">
-            <img
-              src={user?.profileImage || "https://via.placeholder.com/40"}
-              alt={user?.name}
-              className="w-10 h-10 rounded-full"
-            />
-            <div>
-              <p className="font-semibold">{user?.name}</p>
-              <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
-            </div>
-          </div>
-          <nav className="space-y-2">
-            <NavItem
-              to=""
-              icon={Activity}
-              text={isTrainer ? "Trainer Dashboard" : "Overview"}
-              isActive={isActiveRoute("")}
-            />
-            {isTrainer ? (
-              <>
-                <NavItem
-                  to="clients"
-                  icon={Users}
-                  text="My Clients"
-                  isActive={isActiveRoute("/clients")}
-                />
-                <NavItem
-                  to="schedule"
-                  icon={Calendar}
-                  text="Schedule"
-                  isActive={isActiveRoute("/schedule")}
-                />
-                <NavItem
-                  to="earnings"
-                  icon={DollarSign}
-                  text="Earnings"
-                  isActive={isActiveRoute("/earnings")}
-                />
-                <NavItem
-                  to="messages"
-                  icon={MessageCircle}
-                  text="Messages"
-                  isActive={isActiveRoute("/messages")}
-                />
-              </>
-            ) : (
-              <>
-                <NavItem
-                  to="workouts"
-                  icon={Users}
-                  text="Workouts"
-                  isActive={isActiveRoute("/workouts")}
-                />
-                <NavItem
-                  to="sessions"
-                  icon={Calendar}
-                  text="My Sessions"
-                  isActive={isActiveRoute("/sessions")}
-                />
-                <NavItem
-                  to="challenges"
-                  icon={Trophy}
-                  text="Challenges"
-                  isActive={isActiveRoute("/challenges")}
-                />
-                <NavItem
-                  to="nutrition"
-                  icon={Utensils}
-                  text="Nutrition"
-                  isActive={isActiveRoute("/nutrition")}
-                />
-                <NavItem
-                  to="mental-wellness"
-                  icon={Brain}
-                  text="Mental Wellness"
-                  isActive={isActiveRoute("/mental-wellness")}
-                />
-                <NavItem
-                  to="device-sync"
-                  icon={Watch}
-                  text="Device Sync"
-                  isActive={isActiveRoute("/device-sync")}
-                />
-              </>
-            )}
-            <NavItem
-              to="settings"
-              icon={Settings}
-              text="Settings"
-              isActive={isActiveRoute("/settings")}
-            />
-          </nav>
-        </div>
-      </aside>
+      <motion.aside
+        id="sidebar"
+        initial={false}
+        animate={{ x: isSidebarOpen ? 0 : -280 }}
+        transition={{ type: "tween" }}
+        className={`fixed top-0 left-0 h-full w-[280px] bg-white shadow-lg z-40 lg:translate-x-0 transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-200 ease-in-out lg:static lg:transform-none`}
+      >
+        <Sidebar
+          user={user}
+          isTrainer={isTrainer}
+          isActiveRoute={isActiveRoute}
+          navItems={navItems}
+          onLogout={handleLogout}
+        />
+      </motion.aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 p-8">
-        <Routes>
-          <Route
-            path="/"
-            element={isTrainer ? <TrainerDashboard /> : <Overview />}
-          />
-          <Route path="workouts" element={<Workouts />} />
-          <Route path="sessions" element={<Sessions />} />
-          <Route path="challenges" element={<Challenges />} />
-          <Route path="nutrition" element={<Nutrition />} />
-          <Route path="mental-wellness" element={<MentalWellness />} />
-          <Route path="device-sync" element={<DeviceSync />} />
-          <Route path="settings" element={<Setting />} />
-          {/* Trainer Routes */}
-          <Route path="clients" element={<MyClients />} />
-          <Route path="schedule" element={<Schedule />} />
-          <Route path="earnings" element={<Earnings />} />
-          <Route path="messages" element={<Messages />} />
-        </Routes>
+      <main className={`lg:ml-[280px] min-h-screen transition-all duration-200`}>
+        <div className="p-4 pt-16 lg:pt-4">
+          <Routes>
+            <Route path="/" element={isTrainer ? <TrainerDashboard /> : <Overview />} />
+            <Route path="workouts" element={<Workouts />} />
+            <Route path="sessions" element={<Sessions />} />
+            <Route path="challenges" element={<Challenges />} />
+            <Route path="nutrition" element={<Nutrition />} />
+            <Route path="mental-wellness" element={<MentalWellness />} />
+            <Route path="device-sync" element={<DeviceSync />} />
+            <Route path="settings" element={<Setting />} />
+            {/* Trainer Routes */}
+            <Route path="clients" element={<MyClients />} />
+            <Route path="schedule" element={<Schedule />} />
+            <Route path="earnings" element={<Earnings />} />
+            <Route path="messages" element={<Messages />} />
+          </Routes>
+        </div>
       </main>
     </div>
   );
 };
-
-interface NavItemProps {
-  to: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: React.FC<any>;
-  text: string;
-  isActive: boolean;
-}
-
-const NavItem: React.FC<NavItemProps> = ({
-  to,
-  icon: Icon,
-  text,
-  isActive,
-}) => (
-  <Link
-    to={to}
-    className={`flex items-center space-x-3 px-4 py-2 rounded-lg transition-colors ${
-      isActive
-        ? "bg-purple-50 text-purple-600"
-        : "text-gray-600 hover:bg-purple-50 hover:text-purple-600"
-    }`}
-  >
-    <Icon className="h-5 w-5" />
-    <span>{text}</span>
-  </Link>
-);
 
 export default Dashboard;
