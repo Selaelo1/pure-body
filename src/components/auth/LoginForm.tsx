@@ -13,8 +13,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const login = useAuthStore((state: { login: any }) => state.login);
+  const login = useAuthStore((state) => state.login);
+  
   const {
     register,
     handleSubmit,
@@ -44,6 +44,7 @@ const LoginForm = () => {
         <input
           {...register("email")}
           type="email"
+          id="email"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
         />
         {errors.email && (
@@ -61,6 +62,7 @@ const LoginForm = () => {
         <input
           {...register("password")}
           type="password"
+          id="password"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500"
         />
         {errors.password && (
@@ -73,7 +75,7 @@ const LoginForm = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-200"
+        className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-200 disabled:opacity-50"
       >
         {isSubmitting ? "Logging in..." : "Log In"}
       </button>
