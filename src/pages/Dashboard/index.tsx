@@ -14,7 +14,6 @@ import {
   MessageCircle,
   Menu,
   X,
-  LogOut,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -148,10 +147,15 @@ const Dashboard = () => {
       </motion.aside>
 
       {/* Main Content */}
-      <main className={`lg:ml-[280px] min-h-screen transition-all duration-200`}>
+      <main
+        className={`lg:ml-[280px] min-h-screen transition-all duration-200`}
+      >
         <div className="p-4 pt-16 lg:pt-4">
           <Routes>
-            <Route path="/" element={isTrainer ? <TrainerDashboard /> : <Overview />} />
+            <Route
+              path="/"
+              element={isTrainer ? <TrainerDashboard /> : <Overview />}
+            />
             <Route path="workouts" element={<Workouts />} />
             <Route path="sessions" element={<Sessions />} />
             <Route path="challenges" element={<Challenges />} />
