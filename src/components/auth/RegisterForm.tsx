@@ -16,7 +16,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 const RegisterForm = () => {
   const navigate = useNavigate();
   const register = useAuthStore((state) => state.register);
-
+  
   const {
     register: registerField,
     handleSubmit,

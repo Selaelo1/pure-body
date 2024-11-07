@@ -1,68 +1,153 @@
-import { Trophy, Timer, Target } from "lucide-react";
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Calendar, Clock, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useBookingStore } from '../../store/bookingStore';
+import { trainers } from '../Trainers/trainersData';
+import { format, addDays, isBefore, startOfToday } from 'date-fns';
 
-const Challenges = () => {
+const BookingPage = () => {
+  const { trainerId } = useParams();
+  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const { hasUsedFreeSession, addSession } = useBookingStore();
+
+  const trainer = trainers.find((t) => t.id === trainerId);
+  if (!trainer) return <div>Trainer not found</div>;
+
+  const availableDates = Array.from({ length: 14 }, (_, i) => {
+    const date = addDays(new Date(), i);
+    return format(date, 'yyyy-MM-dd');
+  });
+
+  const availableTimes = [
+    '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'
+  ];
+
+  const handleBooking = () => {
+    if (!selectedDate || !selectedTime) return;
+
+    const session = {
+      id: Math.random().toString(36).substr(2, 9),
+      trainerId: trainer.id,
+      trainerName: trainer.name,
+      date: selectedDate,
+      time: selectedTime,
+      status: 'upcoming' as const,
+    };
+
+    addSession(session);
+    navigate('/dashboard/sessions');
+  };
+
+  const isDateValid = (date: string) => {
+    return !isBefore(new Date(date), startOfToday());
+  };
+
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Challenges</h1>
+    <div className="pt-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+      <div className="py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          Book a Session with {trainer.name}
+        </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {challenges.map((challenge) => (
-          <div
-            key={challenge.title}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+        {hasUsedFreeSession && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6"
           >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <Trophy className="h-8 w-8 text-yellow-500" />
-                <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm">
-                  {challenge.duration}
-                </span>
+            <div className="flex items-start">
+              <AlertCircle className="h-5 w-5 text-purple-600 mt-0.5 mr-3" />
+              <div>
+                <h3 className="text-purple-800 font-semibold">
+                  Free Trial Already Used
+                </h3>
+                <p className="text-purple-600">
+                  This session will be charged at ${trainer.hourlyRate}/hour
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-2">{challenge.title}</h3>
-              <p className="text-gray-600 mb-4">{challenge.description}</p>
-              <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                <span className="flex items-center">
-                  <Timer className="h-4 w-4 mr-1" />
-                  {challenge.participants} participants
-                </span>
-                <span className="flex items-center">
-                  <Target className="h-4 w-4 mr-1" />
-                  {challenge.completion} completion rate
-                </span>
-              </div>
-              <button className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
-                Join Challenge
-              </button>
+            </div>
+          </motion.div>
+        )}
+
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select Date
+            </label>
+            <div className="grid grid-cols-4 gap-2">
+              {availableDates.map((date) => (
+                <button
+                  key={date}
+                  onClick={() => setSelectedDate(date)}
+                  className={`p-3 rounded-lg border text-sm ${
+                    selectedDate === date
+                      ? 'bg-purple-600 text-white border-purple-600'
+                      : 'border-gray-300 hover:border-purple-600'
+                  } ${!isDateValid(date) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!isDateValid(date)}
+                >
+                  {format(new Date(date), 'MMM d')}
+                </button>
+              ))}
             </div>
           </div>
-        ))}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select Time
+            </label>
+            <div className="grid grid-cols-4 gap-2">
+              {availableTimes.map((time) => (
+                <button
+                  key={time}
+                  onClick={() => setSelectedTime(time)}
+                  className={`p-3 rounded-lg border text-sm ${
+                    selectedTime === time
+                      ? 'bg-purple-600 text-white border-purple-600'
+                      : 'border-gray-300 hover:border-purple-600'
+                  }`}
+                >
+                  {time}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t pt-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-2">
+                <Calendar className="h-5 w-5 text-gray-400" />
+                <span className="text-gray-600">
+                  {selectedDate
+                    ? format(new Date(selectedDate), 'MMMM d, yyyy')
+                    : 'Select a date'}
+                </span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="h-5 w-5 text-gray-400" />
+                <span className="text-gray-600">
+                  {selectedTime || 'Select a time'}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={handleBooking}
+              disabled={!selectedDate || !selectedTime}
+              className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {hasUsedFreeSession
+                ? `Book Session ($${trainer.hourlyRate})`
+                : 'Book Free Trial Session'}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-const challenges = [
-  {
-    title: "75 Hard Challenge",
-    description: "Complete 75 days of strict fitness and mental discipline.",
-    duration: "75 days",
-    participants: "1.2k",
-    completion: "68%",
-  },
-  {
-    title: "50K in 30 Days",
-    description: "Run or walk 50 kilometers within 30 days.",
-    duration: "30 days",
-    participants: "856",
-    completion: "72%",
-  },
-  {
-    title: "100 Push-ups Challenge",
-    description: "Build up to doing 100 push-ups in one session.",
-    duration: "30 days",
-    participants: "2.1k",
-    completion: "45%",
-  },
-];
-
-export default Challenges;
+export default BookingPage;

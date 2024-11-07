@@ -1,3 +1,4 @@
+import React from "react";
 import { Brain, Heart, Sun, Moon } from "lucide-react";
 
 const MentalWellness = () => {

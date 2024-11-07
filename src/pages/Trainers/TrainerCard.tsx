@@ -7,10 +7,7 @@ interface TrainerCardProps {
   onViewProfile: () => void;
 }
 
-const TrainerCard: React.FC<TrainerCardProps> = ({
-  trainer,
-  onViewProfile,
-}) => {
+const TrainerCard: React.FC<TrainerCardProps> = ({ trainer, onViewProfile }) => {
   const averageRating =
     trainer.reviews.reduce((acc, review) => acc + review.rating, 0) /
     trainer.reviews.length;
@@ -37,9 +34,7 @@ const TrainerCard: React.FC<TrainerCardProps> = ({
               {averageRating.toFixed(1)} ({trainer.reviews.length} reviews)
             </span>
           </div>
-          <span className="text-purple-600 font-semibold">
-            ${trainer.hourlyRate}/hr
-          </span>
+          <span className="text-purple-600 font-semibold">${trainer.hourlyRate}/hr</span>
         </div>
 
         <p className="text-gray-600 mb-4 line-clamp-2">{trainer.bio}</p>
@@ -52,9 +47,7 @@ const TrainerCard: React.FC<TrainerCardProps> = ({
             View Profile
           </button>
           <button
-            onClick={() =>
-              (window.location.href = `/dashboard/messages/${trainer.id}`)
-            }
+            onClick={() => window.location.href = `/dashboard/messages/${trainer.id}`}
             className="flex items-center justify-center px-4 py-2 border border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-colors"
           >
             <MessageCircle className="h-5 w-5" />

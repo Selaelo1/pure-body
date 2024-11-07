@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout, user } = useAuthStore();
   const navigate = useNavigate();
-  const isTrainer = user?.role === "trainer";
+  const isTrainer = user?.role === 'trainer';
 
   const handleLogout = () => {
     logout();

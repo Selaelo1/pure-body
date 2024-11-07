@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { motion } from "framer-motion";
 import { DollarSign, TrendingUp, CreditCard, Calendar } from "lucide-react";
@@ -105,16 +104,14 @@ const StatCard: React.FC<StatCardProps> = ({
 const transactions = [
   {
     clientName: "Emma Watson",
-    clientImage:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    clientImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     amount: "85",
     date: "March 20, 2024",
     type: "1:1 Training Session",
   },
   {
     clientName: "John Smith",
-    clientImage:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    clientImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     amount: "170",
     date: "March 19, 2024",
     type: "Monthly Package",

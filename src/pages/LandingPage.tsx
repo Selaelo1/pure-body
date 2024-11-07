@@ -39,7 +39,7 @@ const LandingPage = () => {
               Connect with expert trainers, track your progress, and join a
               community of fitness enthusiasts on your journey to better health.
             </p>
-            <button
+            <button 
               onClick={() => navigate("/register")}
               className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors flex items-center"
             >
@@ -79,7 +79,7 @@ const LandingPage = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             Ready to Start Your Fitness Journey?
           </h2>
-          <button
+          <button 
             onClick={() => navigate("/register")}
             className="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors"
           >

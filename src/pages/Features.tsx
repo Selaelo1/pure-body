@@ -26,8 +26,7 @@ const Features = () => {
             Everything You Need for Your Fitness Journey
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Pure Body provides all the tools and support you need to achieve
-            your fitness goals
+            Pure Body provides all the tools and support you need to achieve your fitness goals
           </p>
         </div>
 
@@ -57,7 +56,7 @@ const Features = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition-colors"
-            onClick={() => (window.location.href = "/register")}
+            onClick={() => window.location.href = '/register'}
           >
             Join Pure Body Now
           </motion.button>

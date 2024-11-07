@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Calendar,
-  Users,
-  DollarSign,
-  Clock,
-  MessageCircle,
-} from "lucide-react";
+import { Calendar, Users, DollarSign, Clock, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const TrainerDashboard = () => {
@@ -15,17 +9,15 @@ const TrainerDashboard = () => {
       time: "10:00 AM",
       date: "2024-03-20",
       type: "Strength Training",
-      image:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     },
     {
       clientName: "John Smith",
       time: "2:30 PM",
       date: "2024-03-20",
       type: "HIIT",
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    }
   ];
 
   return (
@@ -109,30 +101,22 @@ const TrainerDashboard = () => {
             <ActionButton
               icon={Calendar}
               text="Schedule Session"
-              onClick={() => {
-                /* handle action */
-              }}
+              onClick={() => {/* handle action */}}
             />
             <ActionButton
               icon={MessageCircle}
               text="Message Clients"
-              onClick={() => {
-                /* handle action */
-              }}
+              onClick={() => {/* handle action */}}
             />
             <ActionButton
               icon={Users}
               text="Client Progress"
-              onClick={() => {
-                /* handle action */
-              }}
+              onClick={() => {/* handle action */}}
             />
             <ActionButton
               icon={Clock}
               text="Availability"
-              onClick={() => {
-                /* handle action */
-              }}
+              onClick={() => {/* handle action */}}
             />
           </div>
         </div>
@@ -141,10 +125,7 @@ const TrainerDashboard = () => {
           <h2 className="text-lg font-semibold mb-4">Recent Messages</h2>
           <div className="space-y-4">
             {[1, 2, 3].map((_, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-4 py-2 border-b last:border-0"
-              >
+              <div key={index} className="flex items-center space-x-4 py-2 border-b last:border-0">
                 <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
                 <p className="text-gray-600 flex-1">New message from client</p>
                 <span className="text-sm text-gray-500">2m ago</span>
@@ -158,7 +139,6 @@ const TrainerDashboard = () => {
 };
 
 interface StatCardProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   title: string;
   value: string;
@@ -184,17 +164,12 @@ const StatCard: React.FC<StatCardProps> = ({
 );
 
 interface ActionButtonProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   text: string;
   onClick: () => void;
 }
 
-const ActionButton: React.FC<ActionButtonProps> = ({
-  icon: Icon,
-  text,
-  onClick,
-}) => (
+const ActionButton: React.FC<ActionButtonProps> = ({ icon: Icon, text, onClick }) => (
   <button
     onClick={onClick}
     className="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg hover:bg-purple-50 transition-colors"

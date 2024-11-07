@@ -5,7 +5,7 @@ const Footer = () => {
   const location = useLocation();
 
   // Hide footer if user is on dashboard routes
-  if (location.pathname.startsWith("/dashboard")) {
+  if (location.pathname.startsWith('/dashboard')) {
     return null;
   }
 
@@ -131,9 +131,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-          <p>
-            &copy; {new Date().getFullYear()} Pure Body. All rights reserved.
-          </p>
+          <p>&copy; {new Date().getFullYear()} Pure Body. All rights reserved.</p>
         </div>
       </div>
     </footer>

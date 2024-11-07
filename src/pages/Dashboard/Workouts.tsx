@@ -1,3 +1,4 @@
+import React from "react";
 import { Dumbbell, Footprints, GrabIcon, Bird } from "lucide-react";
 
 const Workouts = () => {

@@ -1,15 +1,16 @@
-import { Calendar, Clock, X } from "lucide-react";
-import { useBookingStore } from "../../store/bookingStore";
-import { format } from "date-fns";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Calendar, Clock, X } from 'lucide-react';
+import { useBookingStore } from '../../store/bookingStore';
+import { format } from 'date-fns';
+import { motion } from 'framer-motion';
 
 const Sessions = () => {
   const { sessions, cancelSession } = useBookingStore();
   const upcomingSessions = sessions.filter(
-    (session) => session.status === "upcoming"
+    (session) => session.status === 'upcoming'
   );
   const pastSessions = sessions.filter(
-    (session) => session.status !== "upcoming"
+    (session) => session.status !== 'upcoming'
   );
 
   return (
@@ -35,7 +36,7 @@ const Sessions = () => {
                     <div className="flex items-center space-x-4 text-gray-600">
                       <div className="flex items-center">
                         <Calendar className="h-5 w-5 mr-2" />
-                        {format(new Date(session.date), "MMMM d, yyyy")}
+                        {format(new Date(session.date), 'MMMM d, yyyy')}
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-5 w-5 mr-2" />
@@ -71,7 +72,7 @@ const Sessions = () => {
                 <div className="flex items-center space-x-4 text-gray-600">
                   <div className="flex items-center">
                     <Calendar className="h-5 w-5 mr-2" />
-                    {format(new Date(session.date), "MMMM d, yyyy")}
+                    {format(new Date(session.date), 'MMMM d, yyyy')}
                   </div>
                   <div className="flex items-center">
                     <Clock className="h-5 w-5 mr-2" />
@@ -79,9 +80,9 @@ const Sessions = () => {
                   </div>
                   <span
                     className={`px-2 py-1 rounded-full text-sm ${
-                      session.status === "completed"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
+                      session.status === 'completed'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                     }`}
                   >
                     {session.status}
