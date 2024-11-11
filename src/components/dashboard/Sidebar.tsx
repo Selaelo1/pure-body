@@ -38,7 +38,7 @@ const Sidebar = ({ user, isActiveRoute, navItems, onLogout }: SidebarProps) => {
           {navItems.map((item) => (
             <NavItem
               key={item.to}
-              to={item.to}
+              to={`/dashboard/${item.to}`}
               icon={item.icon}
               text={item.text}
               isActive={isActiveRoute(item.to)}
