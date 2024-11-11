@@ -13,7 +13,8 @@ import {
   DollarSign,
   MessageCircle,
   Menu,
-  X,
+  Lightbulb,
+  Search,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +34,8 @@ import MyClients from "./trainer/MyClients";
 import Schedule from "./trainer/Schedule";
 import Earnings from "./trainer/Earnings";
 import Messages from "./trainer/Messages";
+import Features from "../Features";
+import TrainersPage from "../Trainers";
 
 const Dashboard = () => {
   const { user, logout } = useAuthStore();
@@ -57,32 +60,13 @@ const Dashboard = () => {
     setIsSidebarOpen(false);
   }, [location]);
 
-  // Close sidebar when clicking outside on mobile
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const sidebar = document.getElementById("sidebar");
-      const menuButton = document.getElementById("menu-button");
-      if (
-        isSidebarOpen &&
-        sidebar &&
-        !sidebar.contains(event.target as Node) &&
-        menuButton &&
-        !menuButton.contains(event.target as Node)
-      ) {
-        setIsSidebarOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isSidebarOpen]);
-
   const trainerNavItems: NavItem[] = [
     { to: "", icon: Activity, text: "Trainer Dashboard" },
     { to: "clients", icon: Users, text: "My Clients" },
     { to: "schedule", icon: Calendar, text: "Schedule" },
     { to: "earnings", icon: DollarSign, text: "Earnings" },
     { to: "messages", icon: MessageCircle, text: "Messages" },
+    { to: "features", icon: Lightbulb, text: "Features" },
     { to: "settings", icon: Settings, text: "Settings" },
   ];
 
@@ -94,6 +78,8 @@ const Dashboard = () => {
     { to: "nutrition", icon: Utensils, text: "Nutrition" },
     { to: "mental-wellness", icon: Brain, text: "Mental Wellness" },
     { to: "device-sync", icon: Watch, text: "Device Sync" },
+    { to: "features", icon: Lightbulb, text: "Features" },
+    { to: "trainers", icon: Search, text: "Find Trainers" },
     { to: "settings", icon: Settings, text: "Settings" },
   ];
 
@@ -103,15 +89,10 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Menu Button */}
       <button
-        id="menu-button"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg lg:hidden"
       >
-        {isSidebarOpen ? (
-          <X className="h-6 w-6 text-gray-600" />
-        ) : (
-          <Menu className="h-6 w-6 text-gray-600" />
-        )}
+        <Menu className="h-6 w-6 text-gray-600" />
       </button>
 
       {/* Sidebar Overlay */}
@@ -129,13 +110,12 @@ const Dashboard = () => {
 
       {/* Sidebar */}
       <motion.aside
-        id="sidebar"
         initial={false}
-        animate={{ x: isSidebarOpen ? 0 : -280 }}
-        transition={{ type: "tween" }}
-        className={`fixed top-0 left-0 h-full w-[280px] bg-white shadow-lg z-40 lg:translate-x-0 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-200 ease-in-out lg:static lg:transform-none`}
+        animate={{
+          x: isSidebarOpen ? 0 : -280,
+          transition: { type: "tween" },
+        }}
+        className="fixed top-0 left-0 h-full w-[280px] bg-white shadow-lg z-40 lg:translate-x-0 transform transition-transform duration-200 ease-in-out"
       >
         <Sidebar
           user={user}
@@ -147,9 +127,7 @@ const Dashboard = () => {
       </motion.aside>
 
       {/* Main Content */}
-      <main
-        className={`lg:ml-[280px] min-h-screen transition-all duration-200`}
-      >
+      <main className="lg:ml-[280px] min-h-screen transition-all duration-200">
         <div className="p-4 pt-16 lg:pt-4">
           <Routes>
             <Route
@@ -163,6 +141,8 @@ const Dashboard = () => {
             <Route path="mental-wellness" element={<MentalWellness />} />
             <Route path="device-sync" element={<DeviceSync />} />
             <Route path="settings" element={<Setting />} />
+            <Route path="features" element={<Features />} />
+            <Route path="trainers" element={<TrainersPage />} />
             {/* Trainer Routes */}
             <Route path="clients" element={<MyClients />} />
             <Route path="schedule" element={<Schedule />} />
