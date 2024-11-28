@@ -47,7 +47,7 @@ const Sidebar = ({ user, isActiveRoute, navItems, onLogout }: SidebarProps) => {
         </div>
       </nav>
 
-      <div className="p-4 border-t">
+      <div className="p-4 border-t mt-auto">
         <button
           onClick={onLogout}
           className="flex items-center space-x-3 px-4 py-2 w-full rounded-lg text-red-600 hover:bg-red-50 transition-colors"
