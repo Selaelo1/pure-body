@@ -86,36 +86,24 @@ const Dashboard = () => {
   const navItems = [...(isTrainer ? trainerNavItems : clientNavItems)];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg lg:hidden"
-      >
-        <Menu className="h-6 w-6 text-gray-600" />
-      </button>
-
-      {/* Sidebar Overlay */}
-      <AnimatePresence>
-        {isSidebarOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+    <div className="min-h-screen bg-gray-50 flex">
+      {/* Mobile Header */}
+      <div className="fixed top-0 left-0 right-0 h-16 bg-white shadow-sm z-50 lg:hidden flex items-center px-4">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 hover:bg-gray-100 rounded-lg"
+          aria-label="Toggle menu"
+        >
+          <Menu className="h-6 w-6 text-gray-600" />
+        </button>
+        <span className="ml-4 font-semibold text-gray-900">{user?.name}</span>
+      </div>
 
       {/* Sidebar */}
-      <motion.aside
-        initial={false}
-        animate={{
-          x: isSidebarOpen ? 0 : -280,
-          transition: { type: "tween" },
-        }}
-        className="fixed top-0 left-0 h-full w-[280px] bg-white shadow-lg z-40 lg:translate-x-0 transform transition-transform duration-200 ease-in-out"
+      <aside
+        className={`fixed inset-y-0 left-0 w-[280px] bg-white shadow-lg transform transition-transform duration-200 ease-in-out z-40 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
       >
         <Sidebar
           user={user}
@@ -124,11 +112,24 @@ const Dashboard = () => {
           navItems={navItems}
           onLogout={handleLogout}
         />
-      </motion.aside>
+      </aside>
+
+      {/* Sidebar Overlay */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Main Content */}
-      <main className="lg:ml-[280px] min-h-screen transition-all duration-200">
-        <div className="p-4 pt-16 lg:pt-4">
+      <main className="flex-1 lg:ml-[280px] min-h-screen">
+        <div className="p-4 pt-20 lg:pt-4">
           <Routes>
             <Route
               path="/"
