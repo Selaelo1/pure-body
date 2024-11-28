@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout, user } = useAuthStore();
   const navigate = useNavigate();
-  const isTrainer = user?.role === 'trainer';
+  const isTrainer = user?.role === "trainer";
 
   const handleLogout = () => {
     logout();
@@ -86,7 +86,8 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-purple-600"
+              className="text-gray-600 hover:text-purple-600 p-2"
+              aria-label="Toggle menu"
             >
               {isOpen ? (
                 <X className="h-6 w-6" />
@@ -100,25 +101,25 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden absolute top-16 inset-x-0 bg-white shadow-lg">
+          <div className="px-4 pt-2 pb-3 space-y-2">
             <Link
               to="/features"
-              className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+              className="block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
             >
               Features
             </Link>
             {!isTrainer && (
               <Link
                 to="/trainers"
-                className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+                className="block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
               >
                 Find Trainers
               </Link>
             )}
             <Link
               to="/challenges"
-              className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+              className="block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
             >
               Challenges
             </Link>
@@ -126,13 +127,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+                  className="block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
                 >
                   Dashboard
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-3 py-2 text-purple-600 font-medium"
+                  className="block w-full text-left px-3 py-2 text-purple-600 hover:bg-purple-50 rounded-lg font-medium"
                 >
                   Sign Out
                 </button>
@@ -141,13 +142,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="block px-3 py-2 text-gray-600 hover:text-purple-600"
+                  className="block px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="block px-3 py-2 text-purple-600 font-medium"
+                  className="block px-3 py-2 text-purple-600 hover:bg-purple-50 rounded-lg font-medium"
                 >
                   Get Started
                 </Link>
