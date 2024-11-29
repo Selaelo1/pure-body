@@ -29,14 +29,14 @@ const TrainerModal: React.FC<TrainerModalProps> = ({ trainer, onClose }) => {
 
   const handleContactTrainer = () => {
     onClose();
-    navigate(`/dashboard/messages`, {
-      state: {
+    navigate(`/dashboard/messages`, { 
+      state: { 
         selectedTrainer: {
           id: trainer.id,
           name: trainer.name,
-          image: trainer.image,
-        },
-      },
+          image: trainer.image
+        }
+      }
     });
   };
 
@@ -74,9 +74,7 @@ const TrainerModal: React.FC<TrainerModalProps> = ({ trainer, onClose }) => {
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h2 className="text-2xl font-bold mb-2">{trainer.name}</h2>
-                <p className="text-gray-600">
-                  {trainer.specialties.join(" • ")}
-                </p>
+                <p className="text-gray-600">{trainer.specialties.join(" • ")}</p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold text-purple-600">
@@ -97,9 +95,7 @@ const TrainerModal: React.FC<TrainerModalProps> = ({ trainer, onClose }) => {
               </div>
               <div className="flex items-center">
                 <Users className="h-5 w-5 text-purple-600 mr-2" />
-                <span className="text-gray-600">
-                  {trainer.clientCount}+ clients
-                </span>
+                <span className="text-gray-600">{trainer.clientCount}+ clients</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-purple-600 mr-2" />
