@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Calendar, Activity, BarChart2 } from "lucide-react";
 
@@ -74,8 +75,7 @@ const clients = [
   {
     id: 1,
     name: "Emma Watson",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     plan: "Premium Plan - 3x/week",
     lastSession: "March 18, 2024",
     nextSession: "March 21, 2024",
@@ -84,8 +84,7 @@ const clients = [
   {
     id: 2,
     name: "John Smith",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     plan: "Basic Plan - 2x/week",
     lastSession: "March 19, 2024",
     nextSession: "March 22, 2024",
