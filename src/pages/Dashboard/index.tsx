@@ -13,8 +13,8 @@ import {
   DollarSign,
   MessageCircle,
   Menu,
-  Lightbulb,
   Search,
+  CreditCard,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +36,7 @@ import Earnings from "./trainer/Earnings";
 import Messages from "./trainer/Messages";
 import Features from "../Features";
 import TrainersPage from "../Trainers";
+import MembershipPlans from "./Membership";
 
 const Dashboard = () => {
   const { user, logout } = useAuthStore();
@@ -66,7 +67,7 @@ const Dashboard = () => {
     { to: "schedule", icon: Calendar, text: "Schedule" },
     { to: "earnings", icon: DollarSign, text: "Earnings" },
     { to: "messages", icon: MessageCircle, text: "Messages" },
-    { to: "features", icon: Lightbulb, text: "Features" },
+    { to: "features", icon: Trophy, text: "Features" },
     { to: "settings", icon: Settings, text: "Settings" },
   ];
 
@@ -78,12 +79,14 @@ const Dashboard = () => {
     { to: "nutrition", icon: Utensils, text: "Nutrition" },
     { to: "mental-wellness", icon: Brain, text: "Mental Wellness" },
     { to: "device-sync", icon: Watch, text: "Device Sync" },
-    { to: "features", icon: Lightbulb, text: "Features" },
+    { to: "messages", icon: MessageCircle, text: "Messages" },
     { to: "trainers", icon: Search, text: "Find Trainers" },
+    { to: "membership", icon: CreditCard, text: "Membership" },
+    { to: "features", icon: Trophy, text: "Features" },
     { to: "settings", icon: Settings, text: "Settings" },
   ];
 
-  const navItems = [...(isTrainer ? trainerNavItems : clientNavItems)];
+  const navItems = isTrainer ? trainerNavItems : clientNavItems;
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -96,13 +99,15 @@ const Dashboard = () => {
         >
           <Menu className="h-6 w-6 text-gray-600" />
         </button>
-        <span className="ml-4 font-semibold text-gray-900">{user?.name}</span>
+        <span className="ml-4 font-semibold text-gray-900">
+          {user?.name}
+        </span>
       </div>
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 w-[280px] bg-white shadow-lg transform transition-transform duration-200 ease-in-out z-40 ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out z-40 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
       >
         <Sidebar
@@ -128,13 +133,10 @@ const Dashboard = () => {
       </AnimatePresence>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-[280px] min-h-screen">
+      <main className="flex-1 lg:ml-64 min-h-screen">
         <div className="p-4 pt-20 lg:pt-4">
           <Routes>
-            <Route
-              path="/"
-              element={isTrainer ? <TrainerDashboard /> : <Overview />}
-            />
+            <Route path="/" element={isTrainer ? <TrainerDashboard /> : <Overview />} />
             <Route path="workouts" element={<Workouts />} />
             <Route path="sessions" element={<Sessions />} />
             <Route path="challenges" element={<Challenges />} />
@@ -144,11 +146,12 @@ const Dashboard = () => {
             <Route path="settings" element={<Setting />} />
             <Route path="features" element={<Features />} />
             <Route path="trainers" element={<TrainersPage />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="membership" element={<MembershipPlans />} />
             {/* Trainer Routes */}
             <Route path="clients" element={<MyClients />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="earnings" element={<Earnings />} />
-            <Route path="messages" element={<Messages />} />
           </Routes>
         </div>
       </main>
