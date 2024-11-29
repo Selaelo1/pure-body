@@ -8,6 +8,7 @@ import {
   Trophy,
   Utensils,
   ArrowRight,
+  Check,
 } from "lucide-react";
 
 const LandingPage = () => {
@@ -73,6 +74,63 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Membership Plans Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Choose Your Plan</h2>
+            <p className="text-xl text-gray-600">
+              Find the perfect membership plan for your fitness journey
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {plans.map((plan, index) => (
+              <motion.div
+                key={plan.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`bg-white rounded-xl shadow-lg overflow-hidden ${
+                  plan.popular ? 'ring-2 ring-purple-600' : ''
+                }`}
+              >
+                {plan.popular && (
+                  <div className="bg-purple-600 text-white text-center py-2">
+                    Most Popular
+                  </div>
+                )}
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-4xl font-bold">R{plan.price}</span>
+                    <span className="text-gray-600 ml-2">/month</span>
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-3 mt-1" />
+                        <span className="text-gray-600">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => navigate("/register")}
+                    className={`w-full py-3 rounded-lg font-semibold transition-colors ${
+                      plan.popular
+                        ? 'bg-purple-600 text-white hover:bg-purple-700'
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }`}
+                  >
+                    Get Started
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-purple-600 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -127,6 +185,54 @@ const features = [
     title: "Mental Wellness",
     description:
       "Focus on holistic health with dedicated mental wellness resources and support.",
+  },
+];
+
+const plans = [
+  {
+    name: 'Basic',
+    price: '499',
+    description: 'Perfect for getting started',
+    features: [
+      'Access to gym facilities',
+      'Basic fitness assessment',
+      'Locker room access',
+      'Access during standard hours (6AM-8PM)',
+      'Group classes (2 per week)',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Premium',
+    price: '899',
+    description: 'Most popular choice',
+    features: [
+      'Unlimited gym access 24/7',
+      'Advanced fitness assessment',
+      'Personal training session (2 per month)',
+      'All group classes included',
+      'Sauna & steam room access',
+      'Guest passes (2 per month)',
+      'Mobile app premium features',
+    ],
+    popular: true,
+  },
+  {
+    name: 'Elite',
+    price: '1499',
+    description: 'The ultimate experience',
+    features: [
+      'All Premium features included',
+      'Weekly prepared meals (14 meals)',
+      'Customized nutrition plan',
+      'Personal training session (4 per month)',
+      'Recovery therapy sessions',
+      'Exclusive members lounge access',
+      'Priority class bookings',
+      'Quarterly body composition analysis',
+      'Sports massage (1 per month)',
+    ],
+    popular: false,
   },
 ];
 
