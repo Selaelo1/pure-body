@@ -5,10 +5,15 @@ import { Contact } from './types';
 
 interface ContactListProps {
   contacts: Contact[];
+  selectedContactId?: string;
   onSelectContact: (contact: Contact) => void;
 }
 
-const ContactList: React.FC<ContactListProps> = ({ contacts, onSelectContact }) => {
+const ContactList: React.FC<ContactListProps> = ({ 
+  contacts, 
+  selectedContactId,
+  onSelectContact 
+}) => {
   return (
     <div className="h-full flex flex-col bg-white">
       <div className="p-4 border-b">
@@ -28,7 +33,9 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, onSelectContact }) 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="p-4 border-b hover:bg-gray-50 cursor-pointer"
+            className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
+              contact.id === selectedContactId ? 'bg-purple-50' : ''
+            }`}
             onClick={() => onSelectContact(contact)}
           >
             <div className="flex items-center space-x-3">
