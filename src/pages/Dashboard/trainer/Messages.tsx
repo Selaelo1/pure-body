@@ -22,14 +22,16 @@ const Messages = () => {
     {
       id: "1",
       name: "Emma Watson",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      image:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       lastMessage: "See you tomorrow at 10 AM!",
       lastMessageTime: "2m ago",
     },
     {
       id: "2",
       name: "John Smith",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      image:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       lastMessage: "Thanks for the session today",
       lastMessageTime: "1h ago",
     },
@@ -50,18 +52,18 @@ const Messages = () => {
         lastMessage: "Start a conversation",
         lastMessageTime: "Now",
       };
-      
+
       // Add trainer to contacts if not already present
-      if (!contacts.find(contact => contact.id === trainerContact.id)) {
-        setContacts(prev => [trainerContact, ...prev]);
+      if (!contacts.find((contact) => contact.id === trainerContact.id)) {
+        setContacts((prev) => [trainerContact, ...prev]);
       }
-      
+
       // Select the trainer's chat
       setSelectedContact(trainerContact);
     } else {
       setSelectedContact(contacts[0]);
     }
-  }, [location.state]);
+  }, [contacts, location.state]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +74,7 @@ const Messages = () => {
       sent: true,
     };
 
-    setMessages(prev => [...prev, message]);
+    setMessages((prev) => [...prev, message]);
     setNewMessage("");
 
     // Simulate reply after 1 second
@@ -81,7 +83,7 @@ const Messages = () => {
         content: "Thanks for reaching out! I'll get back to you soon.",
         sent: false,
       };
-      setMessages(prev => [...prev, reply]);
+      setMessages((prev) => [...prev, reply]);
     }, 1000);
   };
 
