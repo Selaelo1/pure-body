@@ -26,23 +26,21 @@ const ChatView: React.FC<ChatViewProps> = ({
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="p-4 border-b">
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={onBack}
-            className="lg:hidden p-2 -ml-2 rounded-full hover:bg-gray-100"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <img
-            src={contact.image}
-            alt={contact.name}
-            className="w-10 h-10 rounded-full"
-          />
-          <div>
-            <h3 className="font-semibold">{contact.name}</h3>
-            <p className="text-sm text-gray-500">Active now</p>
-          </div>
+      <div className="p-4 border-b flex items-center space-x-3">
+        <button
+          onClick={onBack}
+          className="lg:hidden p-2 -ml-2 rounded-full hover:bg-gray-100"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </button>
+        <img
+          src={contact.image}
+          alt={contact.name}
+          className="w-10 h-10 rounded-full"
+        />
+        <div>
+          <h3 className="font-semibold">{contact.name}</h3>
+          <p className="text-sm text-gray-500">Active now</p>
         </div>
       </div>
 
