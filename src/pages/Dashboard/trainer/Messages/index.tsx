@@ -27,9 +27,8 @@ const Messages = () => {
 
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [showChat, setShowChat] = useState(false);
+  const [isChatVisible, setIsChatVisible] = useState(false);
 
-  // Handle trainer selection from location state
   useEffect(() => {
     const selectedTrainer = location.state?.selectedTrainer;
     if (selectedTrainer) {
@@ -41,20 +40,22 @@ const Messages = () => {
         lastMessageTime: 'Now',
       };
 
-      // Add trainer to contacts if not already present
       if (!contacts.find((contact) => contact.id === trainerContact.id)) {
         setContacts((prev) => [trainerContact, ...prev]);
       }
 
-      // Select the trainer's chat
       setSelectedContact(trainerContact);
-      setShowChat(true);
+      setIsChatVisible(true);
     }
   }, [location.state]);
 
   const handleSelectContact = (contact: Contact) => {
     setSelectedContact(contact);
-    setShowChat(true);
+    setIsChatVisible(true);
+  };
+
+  const handleBackToContacts = () => {
+    setIsChatVisible(false);
   };
 
   const handleSendMessage = (content: string) => {
@@ -65,7 +66,6 @@ const Messages = () => {
 
     setMessages((prev) => [...prev, message]);
 
-    // Simulate reply after 1 second
     setTimeout(() => {
       const reply: Message = {
         content: "Thanks for reaching out! I'll get back to you soon.",
@@ -80,23 +80,22 @@ const Messages = () => {
       <h1 className="text-2xl font-bold">Messages</h1>
 
       <div className="bg-white rounded-lg shadow-md h-[calc(100vh-12rem)]">
-        <div className="h-full lg:grid lg:grid-cols-3">
-          {/* Contact List - Hidden on mobile when chat is shown */}
+        <div className="h-full flex">
           <div
-            className={`h-full border-r ${
-              showChat ? 'hidden lg:block' : 'block'
-            }`}
+            className={`h-full ${
+              isChatVisible ? 'hidden lg:block lg:w-1/3' : 'w-full'
+            } border-r`}
           >
             <ContactList
               contacts={contacts}
+              selectedContactId={selectedContact?.id}
               onSelectContact={handleSelectContact}
             />
           </div>
 
-          {/* Chat View - Hidden on mobile when showing contacts */}
           <div
-            className={`h-full lg:col-span-2 ${
-              showChat ? 'block' : 'hidden lg:block'
+            className={`h-full ${
+              isChatVisible ? 'flex-1' : 'hidden lg:block lg:w-2/3'
             }`}
           >
             {selectedContact ? (
@@ -104,7 +103,7 @@ const Messages = () => {
                 contact={selectedContact}
                 messages={messages}
                 onSendMessage={handleSendMessage}
-                onBack={() => setShowChat(false)}
+                onBack={handleBackToContacts}
               />
             ) : (
               <div className="flex items-center justify-center h-full text-gray-500">
