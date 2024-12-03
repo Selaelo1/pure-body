@@ -91,9 +91,7 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`bg-white rounded-xl shadow-lg overflow-hidden ${
-                  plan.popular ? 'ring-2 ring-purple-600' : ''
-                }`}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:ring-2 hover:ring-purple-600 transition-all duration-300"
               >
                 {plan.popular && (
                   <div className="bg-purple-600 text-white text-center py-2">
@@ -116,11 +114,7 @@ const LandingPage = () => {
                   </ul>
                   <button
                     onClick={() => navigate("/register")}
-                    className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-                      plan.popular
-                        ? 'bg-purple-600 text-white hover:bg-purple-700'
-                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                    }`}
+                    className="w-full py-3 rounded-lg font-semibold bg-purple-600 text-white hover:bg-purple-700 transition-colors"
                   >
                     Get Started
                   </button>
